@@ -22,14 +22,16 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install clingo (Potassco PPA)
+      - name: Install clingo
         run: |
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y ppa:potassco/stable
-          sudo apt-get update
-          sudo apt-get install -y clingo
-          clingo --version
+          python -m pip install --upgrade pip
+          python -m pip install clingo==5.6.2
+          # pip's clingo has no `clingo` command; add one that runs `python -m clingo`
+          mkdir -p "$HOME/bin"
+          printf '#!/bin/sh\nexec %s -m clingo "$@"\n' "$(command -v python)" > "$HOME/bin/clingo"
+          chmod +x "$HOME/bin/clingo"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          "$HOME/bin/clingo" --version
 
       - name: Question 0a
         id: question-0a
