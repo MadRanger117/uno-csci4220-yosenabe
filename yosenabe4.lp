@@ -8,5 +8,5 @@ path(R,C,TR,TC,X,Y) :- target(R,C,TR,TC), cell(X,Y), Y=C, TR<R, X<=R, TR<=X.
 1 { target(R,C,TR,TC) : option(R,C,TR,TC) } 1 :- number(R,C,_).
 :- area(TR,TC,ID), not covered(ID).
 :- path(R,C,TR,TC,X,Y), path(R2,C2,TR2,TC2,X,Y), (R,C) != (R2,C2).
-:- goal(ID,value), #sum { V : target(R,C,TR,TC), number(R,C,V), area(TR,TC,ID), } = value.
+:- goal(ID,Value), #sum { V : target(R,C,TR,TC), number(R,C,V), area(TR,TC,ID) } != Value.
 #show target/4.
